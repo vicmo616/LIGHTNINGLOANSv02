@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+    <title>Lightning Loans: A Coding Project by Victor M. Ortiz</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>
+
+    <link href="css/site.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+    
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <!--####  nav  ####-->
+    <nav class="navbar navbar-expand-md navbar-dark bg-black fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="img/Vic manuel.png" width="36" height="36" class="d-inline-block align-text-top" width="30" height="24"> Lightning Loans</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="app.html">The App</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="code.html">The Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/vicmo616/LIGHTNINGLOANSv02">Git Repo</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="#">About</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--####  main  ####-->
+    <main class="flex-shrink-0">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1>Loan Calculator</h1>
+
+                    <form class="row gy-3 gx-2 bg-light p-2 mt-3">
+                        <div class="col-12 mt-1">
+                            <div class="">
+                                <label for="inputLoanAmount" class="form-label mb-1">Loan Amount</label>
+                                <input type="number" name="loanAmount" class="form-control" id="inputLoanAmount" aria-label="Loan Amount" value="15000">
+                            </div>
+                        </div>
+                        <div class="col-12 mt-1">
+                            <div class="">
+                                <label for="inputPayments" class="form-label mb-1">Payments</label>
+                                <input type="number" name="payments" class="form-control" id="inputPayments" aria-label="Payments" value="60">
+                            </div>
+                        </div>
+                        <div class="col-12 mt-1">
+                            <div class="">
+                                <label for="inputRate" class="form-label mb-1">Rate</label>
+                                <input type="number" name="rate" class="form-control" id="inputRate" aria-label="Rate" value="3.5">
+                            </div>
+                        </div>
+                        <div class="col-12 mt-1 mb-1 d-flex justify-content-end">
+                            <button type="button" class="btn btn-md btn-outline-primary" id="btnCalculate">Calculate</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-5 d-flex justify-content-center">
+                                <h3 class="text-dark fst-italic">Your Monthly Payments</h3>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h1 id="monthlyPayment" class="text-dark fs-1 pt-4 pb-3"></h1>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            Total Principal
+                        </div>
+                        <div class="col-6" id="totalPrincipal">
+                            <!-- total principal here -->
+                        </div>
+                        <div class="col-6">
+                            Total Interest
+                        </div>
+                        <div class="col-6" id="totalInterest">
+                            <!-- total interest here -->
+                        </div>
+                        <div class="col-6">
+                            Total Cost
+                        </div>
+                        <div class="col-6" id="totalCost">
+                            <!-- total cost here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr class="tableHeader">
+                                    <th>Month</th>
+                                    <th>Payment</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Total Interest</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results">
+                                <!--## add results to here ##-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--####  footer  ####-->
+    <footer class="footer mt-auto py-3 sticky-footer bg-black">
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-lg-3 gy-2">
+                <div class="col order-last order-lg-first text-light">
+                    <div class=""><span class="text-muted">&copy;2021</span> Victor M. Ortiz | vicmo616@gmail.com</div>
+                </div>
+                <div class="col d-flex align-items-center justify-content-start justify-content-lg-center">
+                    <img src="img/favicon.ico" alt="VMO Logo">
+                </div>
+                <div class="col d-flex align-items-center justify-content-start justify-content-lg-end">
+                    <div class="row">
+                        <div class="col social"><a target="_blank" href="https://github.com/vicmo616"><i class="fab fa-github fa-2x"></i></a>
+                        </div>
+                        <div class="col social"><a target="_blank" href="https://www.linkedin.com/in/victor-m-ortiz-/"><i class="fab fa-linkedin fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <template id="template">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </template>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
+    </script>
+    <script src="/js/site.js"></script>
+
+    <script>
+        document.getElementById("btnCalculate").addEventListener("click", getValues);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+    <title>Lightning Loans: A Coding Project By Victor M. Ortiz</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/prism.css">
+    <link rel="icon" href="img/favicon.ico">
+</head>
+
+<body class="d-flex flex-column h-100">
+    <!-- nav section -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-black">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="img/Vic manuel.png" width="36" height="36"
+                    class="d-inline-block align-text-top"> Lightning Loans</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="app.html">The App</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="code.html">The Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/vicmo616/LIGHTNINGLOANSv02">Git
+                            Repo</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="#">About</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- main section -->
+    <main class="flex-shrink-0">
+        <div class="container px-5 py-5 mt-5">
+            <h2 class="border-1 border-bottom bottom-dark">The Code for Lightning Loans</h2>
+            <div class="row row-cols-1 row-cols-lg-2">
+                <div class="col-lg-8">
+                    <pre class="line-numbers">
+                        <code class="language-javascript">
+                            // get user values
+// controller
+function getValues() {
+    let loanamount = document.getElementById("inputLoanAmount").value;
+    let payments = document.getElementById("inputPayments").value;
+    let rate = document.getElementById("inputRate").value;
+
+    // convert to int
+    loanamount = parseInt(loanamount);
+    payments = parseInt(payments);
+    rate = parseInt(rate);
+
+    // validate is integer
+    if (Number.isInteger(loanamount) && Number.isInteger(payments) && Number.isInteger(rate)) {
+        // call calculate payment
+        let calc = calculatePayments(loanamount, payments, rate);
+
+        // call view
+        displayLoan(calc, loanamount, payments);
+    }
+}
+
+
+// calculate payments
+// logic
+function calculatePayments(la, p, r) {
+    // setup calc obj for returning values
+    // setup arrays for each of the different values to collect
+    let calc = {};
+    let currentBalance = [];
+    let interestPayment = [];
+    let principalPayment = [];
+    let remainingBalance = [];
+
+    // calculate the monthly payment to start
+    let totalMonthlyPayment = la * (r/1200) / (1 - (1 + r/1200)**-p);
+
+    // push the starting laon amount to current balance
+    currentBalance.push(la);
+
+    // loop to calculate each month amounts and push each value into it's array
+    for (let i = 0; i < p; i++) {
+        interestPayment.push(currentBalance[i] * r/1200);
+        principalPayment.push(totalMonthlyPayment - interestPayment[i]);
+        remainingBalance.push(currentBalance[i] - principalPayment[i]);
+
+        currentBalance.push(remainingBalance[i]);
+    }
+
+    // add each array to the calc obj
+    calc.currentBalance = currentBalance;
+    calc.interestPayment = interestPayment;
+    calc.principalPayment = principalPayment;
+    calc.remainingBalance = remainingBalance;
+    calc.totalMonthlyPayment = totalMonthlyPayment;
+
+    return calc;
+}
+
+
+// display payments and amortization table
+// view
+function displayLoan(calc, la, p) {
+    document.getElementById("monthlyPayment").innerHTML = `$${calc.totalMonthlyPayment.toFixed(2)}`;
+    document.getElementById("totalPrincipal").innerHTML = `$${la.toFixed(2)}`;
+
+    // get result area and template for use
+    let tableBody = document.getElementById("results");
+    let templateRow = document.getElementById("template");
+    let totalInterest = 0;
+
+    // clear table
+    tableBody.innerHTML = "";
+
+    // loop array to create output from array
+    for (let i = 0; i < p; i++)
+    {
+        let tableRow = document.importNode(templateRow.content, true);
+        
+        // sum the interest for each month
+        totalInterest += calc.interestPayment[i];
+
+        // grab the td put in an array
+        let rowCols = tableRow.querySelectorAll("td");
+        rowCols[0].textContent = i + 1;
+        rowCols[1].textContent = `$${calc.totalMonthlyPayment.toFixed(2)}`;
+        rowCols[2].textContent = `$${calc.principalPayment[i].toFixed(2)}`;
+        rowCols[3].textContent = `$${calc.interestPayment[i].toFixed(2)}`;
+        rowCols[4].textContent = `$${totalInterest.toFixed(2)}`;
+        rowCols[5].textContent = `$${calc.remainingBalance[i].toFixed(2)}`;
+
+        tableBody.appendChild(tableRow);
+    }
+
+    // add the last items for total interext and total cost of completed loan
+    document.getElementById("totalInterest").innerHTML = `$${totalInterest.toFixed(2)}`;
+    let totalCost = totalInterest + la;
+    document.getElementById("totalCost").innerHTML = `$${totalCost.toFixed(2)}`;
+}
+                        </code>
+                    </pre>
+                </div>
+                <div class="col-lg-4">
+                    <p>The Code is structured in three functions.</p>
+                    <h5>getValues</h5>
+                    <h5>calculatePayments</h5>
+                    <h5>displayLoan</h5>
+
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- footer section -->
+    <footer class="footer mt-auto py-3 bg-black">
+        <div class="container-fluid ">
+            <div class="row row-cols-1 row-cols-lg-3 gy-2">
+                <div class="col  order-last order-lg-first text-light">
+                    <div><span class="text-muted">&copy;2021</span> Victor M. Ortiz | vicmo616@gmail.com</div>
+                </div>
+                <div class="col align-items-center d-flex justify-content-center justify-content-lg-center ml-5">
+                    <img src="img/favicon.ico" alt="Vic Manuel Ortiz Logo">
+                </div>
+                <div class="col d-flex align-items-center justify-content-start justify-content-lg-end">
+                    <div class="row">
+                        <div class="col social"><a target="_blank" href="https://github.com/vicmo616"><i
+                                    class="fab fa-github fa-2x"></i></a>
+                        </div>
+                        <div class="col social"><a target="_blank" href="https://www.linkedin.com/in/victor-m-ortiz-/"><i
+                                    class="fab fa-linkedin fa-2x"></i></a>
+                        </div>
+                        <!-- <div class="col social"><a target="_blank" href="#"><i class="fab fa-github fa-2x"></i></a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
+        </script>
+    <script src="js/prism.js"></script>
+    <script>
+        Prism.plugins.NormalizeWhitespace.setDefaults({
+            'remove-trailing': true,
+            'remove-indent': true,
+            'left-trim': true,
+            'right-trim': true
+        })
+    </script>
+</body>
+
+</html>

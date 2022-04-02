@@ -1,0 +1,79 @@
+:root {
+    --primary-color: #1d5888;
+    --secondary-color: #137dc5;
+    --dark-color: #292929;
+    --white-color: #e6e6e6;
+}
+
+body {
+    color: var(--dark-color);
+}
+
+nav {
+    background-color: var(--dark-color);
+}
+
+.tableSize {
+    width: 100%;
+}
+
+.thColor {
+    background-color: var(--primary-color);
+}
+
+footer {
+    background-color: var(--dark-color);
+    padding-right: 1rem;
+}
+
+h1,h3,h4,h5,h6 {
+    color: var(--primary-color);
+}
+
+footer .social>a {
+    color: var(--white-color);
+    opacity: .75;
+}
+
+footer .social>a:hover {
+    opacity: 0.9;
+    color: var(--secondary-color);
+}
+
+.fas {
+    color: #FFBD4A;
+}
+
+.bsicon {
+    color: #8312FA;
+}
+
+.jsicon {
+    color: #F0DB4F;
+}
+
+.html5icon {
+    color: #E44D26;
+}
+
+.cssicon {
+    color: #0A71B8;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+white-space: pre-wrap;
+word-break: break-all;
+word-wrap: break-word;
+}
+
+.tableHeader {
+    background-color: #1d5888;
+    color: white;
+    font-weight: bold;
+}
+
+main>.container {
+    padding: 60px 15px 0;
+    margin-bottom: 5rem;
+}
